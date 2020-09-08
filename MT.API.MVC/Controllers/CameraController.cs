@@ -35,6 +35,8 @@ namespace MT.API.MVC.Controllers
                     IsIn = req.IsIn,
                     Pin = req.Pin,
                     StreetID = req.StreetID,
+                    Count = req.Count,
+                    Date=req.Date
                 };
                 context.Camera.Add(camrea);
                 context.SaveChanges();

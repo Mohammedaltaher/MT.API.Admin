@@ -13,5 +13,7 @@ namespace MT.API.MVC.Models.Dtos
         public string IsDeleted { get; set; }
         public Nullable<int> Diriction { get; set; }
         public Nullable<bool> IsIn { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<int> Count { get; set; }
     }
 }
