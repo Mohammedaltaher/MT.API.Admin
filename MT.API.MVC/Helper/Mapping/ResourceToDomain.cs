@@ -8,11 +8,11 @@ using System.Web;
 
 namespace MT.API.MVC.Helper.Mapping
 {
-    public class ResourceToDomain :Profile
+    public class ResourceToDomain 
     {
         public ResourceToDomain()
         {
-            CreateMap<CameraRequestDto, Camera>();
+         //   CreateMap<CameraRequestDto, Camera>();
         }
     }
 }

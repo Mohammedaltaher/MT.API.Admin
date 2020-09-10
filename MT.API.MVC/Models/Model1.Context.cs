@@ -29,5 +29,7 @@ namespace MT.API.MVC.Models
         public virtual DbSet<Camera> Cameras { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserType> UserTypes { get; set; }
     }
 }

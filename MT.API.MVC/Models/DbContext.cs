@@ -12,6 +12,8 @@ namespace MT.API.MVC.Models
         public DbSet<City> City { get; set; }
         public DbSet<Camera> Camera { get; set; }
         public DbSet<Street> Street { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<UserType> UserType { get; set; }
 
     }
 }

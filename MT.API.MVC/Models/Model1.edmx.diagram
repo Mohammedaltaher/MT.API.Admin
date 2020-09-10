@@ -11,6 +11,9 @@
         <EntityTypeShape EntityType="MonitoringTrafficDBModel.Street" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Cameras_dbo_Streets_StreetID" ManuallyRouted="false" />
         <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Streets_dbo_Cities_CityID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.User" Width="1.5" PointX="5.625" PointY="5" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.UserType" Width="1.5" PointX="3.375" PointY="5.5" />
+        <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Users_dbo_UserTypes_UserTypeId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

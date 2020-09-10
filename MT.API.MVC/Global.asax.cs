@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using MT.API.MVC.App_Start;
+using MT.API.MVC.Helper.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,11 +17,11 @@ namespace MT.API.MVC
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+           
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
         }
     }
 }
