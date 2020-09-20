@@ -192,6 +192,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DbContext.cs" />
+    <Compile Include="Models\Dtos\StreetDtos.cs" />
     <Compile Include="Models\Dtos\UserDtos.cs" />
     <Compile Include="Models\Dtos\CameraDtos.cs" />
     <Compile Include="Models\Model1.Context.cs">

@@ -45,6 +45,7 @@
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="nvarchar(max)" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -178,6 +179,7 @@
           <Property Name="IsDeleted" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cameras" Relationship="Self.FK_dbo_Cameras_dbo_Streets_StreetID" FromRole="Streets" ToRole="Cameras" />
           <NavigationProperty Name="City" Relationship="Self.FK_dbo_Streets_dbo_Cities_CityID" FromRole="Streets" ToRole="Cities" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_dbo_Cameras_dbo_Streets_StreetID">
           <End Role="Streets" Type="Self.Street" Multiplicity="1">
@@ -308,6 +310,7 @@
           <EntitySetMapping Name="Streets">
             <EntityTypeMapping TypeName="MonitoringTrafficDBModel.Street">
               <MappingFragment StoreEntitySet="Streets">
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

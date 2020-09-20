@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MT.API.MVC.Models.Dtos
 {
-    public class CameraRequestDto
+    public class StreetRequestDto
     {
         public int StreetID { get; set; }
         public string Pin { get; set; }
@@ -15,16 +15,5 @@ namespace MT.API.MVC.Models.Dtos
         public Nullable<bool> IsIn { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> Count { get; set; }
-    }
-
-    public class streetInfoResponseDto { 
-
-      public IEnumerable<streetInfoDto> Data { get; set; }
-    }
-    public class streetInfoDto
-    {
-        public string StreetName { get; set; }
-        public int CurrentCars { get; set; }
-        public int Capacity { get; set; }
     }
 }

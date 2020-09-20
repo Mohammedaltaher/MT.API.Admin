@@ -24,6 +24,7 @@ namespace MT.API.MVC.Models
         public int CityID { get; set; }
         public string Name { get; set; }
         public string IsDeleted { get; set; }
+        public int Capacity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Camera> Cameras { get; set; }

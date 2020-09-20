@@ -15,6 +15,9 @@ namespace MT.API.MVC.App_Start
           return  new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDto>();
+                cfg.CreateMap<Camera, streetInfoDto>()
+               .ForMember(p => p.Capacity, opt => opt.MapFrom(x => x.Street.Capacity))
+               .ForMember(p => p.CurrentCars, opt => opt.MapFrom(x => x.Count));
             });
 
         }
