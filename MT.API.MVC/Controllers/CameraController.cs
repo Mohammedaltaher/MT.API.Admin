@@ -32,7 +32,7 @@ namespace MT.API.MVC.Controllers
                 Data = mapper.Map< IEnumerable< Camera>, IEnumerable< streetInfoDto>>(data)
             };
         
-            return Ok(response);
+            return Json(response);
         }
         // POST api/values
         public IHttpActionResult Post([FromBody] CameraRequestDto req)
