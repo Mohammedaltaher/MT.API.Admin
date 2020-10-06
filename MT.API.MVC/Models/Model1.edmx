@@ -37,6 +37,25 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Diractions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="From" Type="nvarchar(max)" />
+          <Property Name="To" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="StreetPosstions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StreetID" Type="int" Nullable="false" />
+          <Property Name="Latitude" Type="real" />
+          <Property Name="Longitude" Type="real" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="IsDeleted" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Streets">
           <Key>
             <PropertyRef Name="Id" />
@@ -46,6 +65,11 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="nvarchar(max)" />
           <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="StartLatitude" Type="real" />
+          <Property Name="StartLongitude" Type="real" />
+          <Property Name="EndLatitude" Type="real" />
+          <Property Name="EndLongitude" Type="real" />
+          <Property Name="DiractionsID" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -83,6 +107,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_StreetPosstions_dbo_Streets_StreetID">
+          <End Role="Streets" Type="Self.Streets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StreetPosstions" Type="Self.StreetPosstions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Streets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StreetPosstions">
+              <PropertyRef Name="StreetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Streets_dbo_Cities_CityID">
           <End Role="Cities" Type="Self.Cities" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -94,6 +132,18 @@
             </Principal>
             <Dependent Role="Streets">
               <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Streets_dbo_Diractions_DiractionsID">
+          <End Role="Diractions" Type="Self.Diractions" Multiplicity="0..1" />
+          <End Role="Streets" Type="Self.Streets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diractions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Streets">
+              <PropertyRef Name="DiractionsID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -115,6 +165,8 @@
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cameras" EntityType="Self.Cameras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Diractions" EntityType="Self.Diractions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StreetPosstions" EntityType="Self.StreetPosstions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
@@ -122,8 +174,16 @@
             <End Role="Streets" EntitySet="Streets" />
             <End Role="Cameras" EntitySet="Cameras" />
           </AssociationSet>
+          <AssociationSet Name="FK_dbo_StreetPosstions_dbo_Streets_StreetID" Association="Self.FK_dbo_StreetPosstions_dbo_Streets_StreetID">
+            <End Role="Streets" EntitySet="Streets" />
+            <End Role="StreetPosstions" EntitySet="StreetPosstions" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Streets_dbo_Cities_CityID" Association="Self.FK_dbo_Streets_dbo_Cities_CityID">
             <End Role="Cities" EntitySet="Cities" />
+            <End Role="Streets" EntitySet="Streets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Streets_dbo_Diractions_DiractionsID" Association="Self.FK_dbo_Streets_dbo_Diractions_DiractionsID">
+            <End Role="Diractions" EntitySet="Diractions" />
             <End Role="Streets" EntitySet="Streets" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Users_dbo_UserTypes_UserTypeId" Association="Self.FK_dbo_Users_dbo_UserTypes_UserTypeId">
@@ -180,6 +240,13 @@
           <NavigationProperty Name="Cameras" Relationship="Self.FK_dbo_Cameras_dbo_Streets_StreetID" FromRole="Streets" ToRole="Cameras" />
           <NavigationProperty Name="City" Relationship="Self.FK_dbo_Streets_dbo_Cities_CityID" FromRole="Streets" ToRole="Cities" />
           <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="StartLatitude" Type="Single" />
+          <Property Name="StartLongitude" Type="Single" />
+          <Property Name="EndLatitude" Type="Single" />
+          <Property Name="EndLongitude" Type="Single" />
+          <Property Name="DiractionsID" Type="Int32" />
+          <NavigationProperty Name="Diraction" Relationship="MonitoringTrafficDBModel.FK_dbo_Streets_dbo_Diractions_DiractionsID" FromRole="Street" ToRole="Diraction" />
+          <NavigationProperty Name="StreetPosstions" Relationship="MonitoringTrafficDBModel.FK_dbo_StreetPosstions_dbo_Streets_StreetID" FromRole="Street" ToRole="StreetPosstion" />
         </EntityType>
         <Association Name="FK_dbo_Cameras_dbo_Streets_StreetID">
           <End Role="Streets" Type="Self.Street" Multiplicity="1">
@@ -228,6 +295,16 @@
             <End Role="UserType" EntitySet="UserTypes" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Diractions" EntityType="MonitoringTrafficDBModel.Diraction" />
+          <EntitySet Name="StreetPosstions" EntityType="MonitoringTrafficDBModel.StreetPosstion" />
+          <AssociationSet Name="FK_dbo_Streets_dbo_Diractions_DiractionsID" Association="MonitoringTrafficDBModel.FK_dbo_Streets_dbo_Diractions_DiractionsID">
+            <End Role="Diraction" EntitySet="Diractions" />
+            <End Role="Street" EntitySet="Streets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_StreetPosstions_dbo_Streets_StreetID" Association="MonitoringTrafficDBModel.FK_dbo_StreetPosstions_dbo_Streets_StreetID">
+            <End Role="Street" EntitySet="Streets" />
+            <End Role="StreetPosstion" EntitySet="StreetPosstions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -264,6 +341,53 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="UserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Diraction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="From" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="To" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Streets" Relationship="MonitoringTrafficDBModel.FK_dbo_Streets_dbo_Diractions_DiractionsID" FromRole="Diraction" ToRole="Street" />
+        </EntityType>
+        <EntityType Name="StreetPosstion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StreetID" Type="Int32" Nullable="false" />
+          <Property Name="Latitude" Type="Single" />
+          <Property Name="Longitude" Type="Single" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Street" Relationship="MonitoringTrafficDBModel.FK_dbo_StreetPosstions_dbo_Streets_StreetID" FromRole="StreetPosstion" ToRole="Street" />
+        </EntityType>
+        <Association Name="FK_dbo_Streets_dbo_Diractions_DiractionsID">
+          <End Type="MonitoringTrafficDBModel.Diraction" Role="Diraction" Multiplicity="0..1" />
+          <End Type="MonitoringTrafficDBModel.Street" Role="Street" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Diraction">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Street">
+              <PropertyRef Name="DiractionsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_StreetPosstions_dbo_Streets_StreetID">
+          <End Type="MonitoringTrafficDBModel.Street" Role="Street" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MonitoringTrafficDBModel.StreetPosstion" Role="StreetPosstion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StreetPosstion">
+              <PropertyRef Name="StreetID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -310,6 +434,11 @@
           <EntitySetMapping Name="Streets">
             <EntityTypeMapping TypeName="MonitoringTrafficDBModel.Street">
               <MappingFragment StoreEntitySet="Streets">
+                <ScalarProperty Name="DiractionsID" ColumnName="DiractionsID" />
+                <ScalarProperty Name="EndLongitude" ColumnName="EndLongitude" />
+                <ScalarProperty Name="EndLatitude" ColumnName="EndLatitude" />
+                <ScalarProperty Name="StartLongitude" ColumnName="StartLongitude" />
+                <ScalarProperty Name="StartLatitude" ColumnName="StartLatitude" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
@@ -338,6 +467,27 @@
               <MappingFragment StoreEntitySet="UserTypes">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Diractions">
+            <EntityTypeMapping TypeName="MonitoringTrafficDBModel.Diraction">
+              <MappingFragment StoreEntitySet="Diractions">
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StreetPosstions">
+            <EntityTypeMapping TypeName="MonitoringTrafficDBModel.StreetPosstion">
+              <MappingFragment StoreEntitySet="StreetPosstions">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

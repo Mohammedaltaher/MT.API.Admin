@@ -192,6 +192,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DbContext.cs" />
+    <Compile Include="Models\Diraction.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Dtos\StreetDtos.cs" />
     <Compile Include="Models\Dtos\UserDtos.cs" />
     <Compile Include="Models\Dtos\CameraDtos.cs" />
@@ -211,6 +214,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Street.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StreetPosstion.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">

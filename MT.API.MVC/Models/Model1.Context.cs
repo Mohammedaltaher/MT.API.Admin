@@ -31,5 +31,7 @@ namespace MT.API.MVC.Models
         public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
+        public virtual DbSet<Diraction> Diractions { get; set; }
+        public virtual DbSet<StreetPosstion> StreetPosstions { get; set; }
     }
 }

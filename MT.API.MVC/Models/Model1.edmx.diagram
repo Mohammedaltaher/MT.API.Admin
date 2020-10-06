@@ -14,6 +14,10 @@
         <EntityTypeShape EntityType="MonitoringTrafficDBModel.User" Width="1.5" PointX="5.625" PointY="5" />
         <EntityTypeShape EntityType="MonitoringTrafficDBModel.UserType" Width="1.5" PointX="3.375" PointY="5.5" />
         <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Users_dbo_UserTypes_UserTypeId" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.Diraction" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.StreetPosstion" Width="1.5" PointX="5.25" PointY="8.75" />
+        <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Streets_dbo_Diractions_DiractionsID" />
+        <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_StreetPosstions_dbo_Streets_StreetID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

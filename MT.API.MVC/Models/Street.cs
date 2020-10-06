@@ -18,6 +18,7 @@ namespace MT.API.MVC.Models
         public Street()
         {
             this.Cameras = new HashSet<Camera>();
+            this.StreetPosstions = new HashSet<StreetPosstion>();
         }
     
         public int Id { get; set; }
@@ -25,9 +26,17 @@ namespace MT.API.MVC.Models
         public string Name { get; set; }
         public string IsDeleted { get; set; }
         public int Capacity { get; set; }
+        public Nullable<float> StartLatitude { get; set; }
+        public Nullable<float> StartLongitude { get; set; }
+        public Nullable<float> EndLatitude { get; set; }
+        public Nullable<float> EndLongitude { get; set; }
+        public Nullable<int> DiractionsID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Camera> Cameras { get; set; }
         public virtual City City { get; set; }
+        public virtual Diraction Diraction { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StreetPosstion> StreetPosstions { get; set; }
     }
 }
