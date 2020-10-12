@@ -43,10 +43,10 @@ namespace MT.API.MVC.Controllers
                 Camera camrea = new Camera()
                 {
                     IpAddress = req.IpAddress,
-                    Diriction = req.Diriction,
+                 //   Diriction = req.Diriction,
                     IsDeleted = "N",
                     IsIn = req.IsIn,
-                    Pin = req.Pin,
+                //    Pin = req.Pin,
                     StreetID = req.StreetID,
                     Count = req.Count,
                     Date=req.Date

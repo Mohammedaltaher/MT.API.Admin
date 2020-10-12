@@ -13,10 +13,10 @@ namespace MT.API.MVC.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MonitoringTrafficDBEntities : DbContext
+    public partial class MonitoringTrafficDBEntities1 : DbContext
     {
-        public MonitoringTrafficDBEntities()
-            : base("name=MonitoringTrafficDBEntities")
+        public MonitoringTrafficDBEntities1()
+            : base("name=MonitoringTrafficDBEntities1")
         {
         }
     
@@ -28,10 +28,9 @@ namespace MT.API.MVC.Models
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Camera> Cameras { get; set; }
         public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<StreetPosstion> StreetPosstions { get; set; }
         public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
-        public virtual DbSet<Diraction> Diractions { get; set; }
-        public virtual DbSet<StreetPosstion> StreetPosstions { get; set; }
     }
 }
