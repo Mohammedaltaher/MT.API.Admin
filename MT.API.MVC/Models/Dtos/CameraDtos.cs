@@ -7,14 +7,10 @@ namespace MT.API.MVC.Models.Dtos
 {
     public class CameraRequestDto
     {
-        public int StreetID { get; set; }
-        public string Pin { get; set; }
-        public string IpAddress { get; set; }
-        public string IsDeleted { get; set; }
-        public Nullable<int> Diriction { get; set; }
-        public Nullable<bool> IsIn { get; set; }
+        public int CameraID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> Count { get; set; }
+        public Nullable<int> InCount { get; set; }
+        public Nullable<int> OutCount { get; set; }
     }
 
     public class streetInfoResponseDto { 
@@ -26,5 +22,21 @@ namespace MT.API.MVC.Models.Dtos
         public string StreetName { get; set; }
         public int CurrentCars { get; set; }
         public int Capacity { get; set; }
+    }
+    public class StreetPossationsResponseDto
+    {
+
+        public IEnumerable<StreetPossationsDto> Data { get; set; }
+    }
+    public class StreetPossationsDto
+    {
+        public int Id { get; set; }
+        public int StreetID { get; set; }
+        public int StreetName { get; set; }
+        public float? Latitude { get; set; }
+        public float? Longitude { get; set; }
+        public string Name { get; set; }
+        public string CityName { get; set; }
+        public int Capcity { get; set; }
     }
 }

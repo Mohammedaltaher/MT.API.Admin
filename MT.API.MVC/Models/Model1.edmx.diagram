@@ -4,14 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="382f04d44e0c41e3b86f753ea6de6d46" Name="Diagram1">
-        <EntityTypeShape EntityType="MonitoringTrafficDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+      <Diagram DiagramId="f100cd64256146879b1a23ab5ddb9fed" Name="Diagram1">
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.CameraRequest" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MonitoringTrafficDBModel.Camera" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MonitoringTrafficDBModel.City" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MonitoringTrafficDBModel.StreetPosstion" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MonitoringTrafficDBModel.Street" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MonitoringTrafficDBModel.User" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MonitoringTrafficDBModel.UserType" Width="1.5" PointX="7.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.City" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.StreetPosstion" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.Street" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.User" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="MonitoringTrafficDBModel.UserType" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_CameraRequests_dbo_Cameras_CameraID" ManuallyRouted="false" />
         <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Cameras_dbo_Streets_StreetID" ManuallyRouted="false" />
         <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_Streets_dbo_Cities_CityID" ManuallyRouted="false" />
         <AssociationConnector Association="MonitoringTrafficDBModel.FK_dbo_StreetPosstions_dbo_Streets_StreetID" ManuallyRouted="false" />

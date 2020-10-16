@@ -14,18 +14,23 @@ namespace MT.API.MVC.Models
     
     public partial class Camera
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Camera()
+        {
+            this.CameraRequests = new HashSet<CameraRequest>();
+        }
+    
         public int Id { get; set; }
         public int StreetID { get; set; }
         public string IpAddress { get; set; }
         public string IsDeleted { get; set; }
         public string Diriction { get; set; }
-        public Nullable<bool> IsIn { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> Count { get; set; }
         public Nullable<float> Latitude { get; set; }
         public Nullable<float> Longitude { get; set; }
         public Nullable<bool> IsInStreetBegaining { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CameraRequest> CameraRequests { get; set; }
         public virtual Street Street { get; set; }
     }
 }

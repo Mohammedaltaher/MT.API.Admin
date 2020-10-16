@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MonitoringTrafficDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MonitoringTrafficDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -15,6 +15,16 @@
           <Property Name="Model" Type="varbinary(max)" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
+        <EntityType Name="CameraRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CameraID" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="InCount" Type="int" />
+          <Property Name="OutCount" Type="int" />
+        </EntityType>
         <EntityType Name="Cameras">
           <Key>
             <PropertyRef Name="Id" />
@@ -24,9 +34,6 @@
           <Property Name="IpAddress" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="nvarchar(max)" />
           <Property Name="Diriction" Type="nvarchar(max)" />
-          <Property Name="IsIn" Type="bit" />
-          <Property Name="Date" Type="datetime" />
-          <Property Name="Count" Type="int" />
           <Property Name="Latitude" Type="real" />
           <Property Name="Longitude" Type="real" />
           <Property Name="IsInStreetBegaining" Type="bit" />
@@ -89,6 +96,20 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK_dbo_CameraRequests_dbo_Cameras_CameraID">
+          <End Role="Cameras" Type="Self.Cameras" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CameraRequests" Type="Self.CameraRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cameras">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CameraRequests">
+              <PropertyRef Name="CameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Cameras_dbo_Streets_StreetID">
           <End Role="Streets" Type="Self.Streets" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -147,12 +168,17 @@
         </Association>
         <EntityContainer Name="MonitoringTrafficDBModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CameraRequests" EntityType="Self.CameraRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cameras" EntityType="Self.Cameras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetPosstions" EntityType="Self.StreetPosstions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTypes" EntityType="Self.UserTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_CameraRequests_dbo_Cameras_CameraID" Association="Self.FK_dbo_CameraRequests_dbo_Cameras_CameraID">
+            <End Role="Cameras" EntitySet="Cameras" />
+            <End Role="CameraRequests" EntitySet="CameraRequests" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Cameras_dbo_Streets_StreetID" Association="Self.FK_dbo_Cameras_dbo_Streets_StreetID">
             <End Role="Streets" EntitySet="Streets" />
             <End Role="Cameras" EntitySet="Cameras" />
@@ -170,8 +196,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MonitoringTrafficDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -185,6 +210,17 @@
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="CameraRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CameraID" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="InCount" Type="Int32" />
+          <Property Name="OutCount" Type="Int32" />
+          <NavigationProperty Name="Camera" Relationship="Self.FK_dbo_CameraRequests_dbo_Cameras_CameraID" FromRole="CameraRequests" ToRole="Cameras" />
+        </EntityType>
         <EntityType Name="Camera">
           <Key>
             <PropertyRef Name="Id" />
@@ -194,13 +230,11 @@
           <Property Name="IpAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Diriction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsIn" Type="Boolean" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="Count" Type="Int32" />
           <Property Name="Latitude" Type="Single" />
           <Property Name="Longitude" Type="Single" />
-          <Property Name="IsInStreetBegaining" Type="Boolean" />
+          <NavigationProperty Name="CameraRequests" Relationship="Self.FK_dbo_CameraRequests_dbo_Cameras_CameraID" FromRole="Cameras" ToRole="CameraRequests" />
           <NavigationProperty Name="Street" Relationship="Self.FK_dbo_Cameras_dbo_Streets_StreetID" FromRole="Cameras" ToRole="Streets" />
+          <Property Name="IsInStreetBegaining" Type="Boolean" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -267,6 +301,20 @@
           <Property Name="IsDeleted" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK_dbo_Users_dbo_UserTypes_UserTypeId" FromRole="UserTypes" ToRole="Users" />
         </EntityType>
+        <Association Name="FK_dbo_CameraRequests_dbo_Cameras_CameraID">
+          <End Role="Cameras" Type="Self.Camera" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CameraRequests" Type="Self.CameraRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cameras">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CameraRequests">
+              <PropertyRef Name="CameraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Cameras_dbo_Streets_StreetID">
           <End Role="Streets" Type="Self.Street" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -323,14 +371,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MonitoringTrafficDBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MonitoringTrafficDBEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="CameraRequests" EntityType="Self.CameraRequest" />
           <EntitySet Name="Cameras" EntityType="Self.Camera" />
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="StreetPosstions" EntityType="Self.StreetPosstion" />
           <EntitySet Name="Streets" EntityType="Self.Street" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="UserTypes" EntityType="Self.UserType" />
+          <AssociationSet Name="FK_dbo_CameraRequests_dbo_Cameras_CameraID" Association="Self.FK_dbo_CameraRequests_dbo_Cameras_CameraID">
+            <End Role="Cameras" EntitySet="Cameras" />
+            <End Role="CameraRequests" EntitySet="CameraRequests" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Cameras_dbo_Streets_StreetID" Association="Self.FK_dbo_Cameras_dbo_Streets_StreetID">
             <End Role="Streets" EntitySet="Streets" />
             <End Role="Cameras" EntitySet="Cameras" />
@@ -353,7 +406,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MonitoringTrafficDBModelStoreContainer" CdmEntityContainer="MonitoringTrafficDBEntities1">
+        <EntityContainerMapping StorageEntityContainer="MonitoringTrafficDBModelStoreContainer" CdmEntityContainer="MonitoringTrafficDBEntities3">
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="MonitoringTrafficDBModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -364,20 +417,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CameraRequests">
+            <EntityTypeMapping TypeName="MonitoringTrafficDBModel.CameraRequest">
+              <MappingFragment StoreEntitySet="CameraRequests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CameraID" ColumnName="CameraID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InCount" ColumnName="InCount" />
+                <ScalarProperty Name="OutCount" ColumnName="OutCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cameras">
             <EntityTypeMapping TypeName="MonitoringTrafficDBModel.Camera">
               <MappingFragment StoreEntitySet="Cameras">
+                <ScalarProperty Name="IsInStreetBegaining" ColumnName="IsInStreetBegaining" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="StreetID" ColumnName="StreetID" />
                 <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Diriction" ColumnName="Diriction" />
-                <ScalarProperty Name="IsIn" ColumnName="IsIn" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="IsInStreetBegaining" ColumnName="IsInStreetBegaining" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
