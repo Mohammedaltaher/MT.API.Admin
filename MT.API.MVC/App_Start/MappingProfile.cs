@@ -23,6 +23,8 @@ namespace MT.API.MVC.App_Start
 
                  cfg.CreateMap<StreetPosstion, StreetPossationsDto>()
               .ForMember(p => p.StreetName, opt => opt.MapFrom(x => x.Street.Capacity))
+              .ForMember(p => p.CityName, opt => opt.MapFrom(x => x.Street.City.Name))
+              .ForMember(p => p.Capcity, opt => opt.MapFrom(x => x.Street.Capacity))
               ;
 
                  cfg.CreateMap<CameraRequestDto, CameraRequest>();

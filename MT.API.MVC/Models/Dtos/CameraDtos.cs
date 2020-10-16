@@ -32,7 +32,7 @@ namespace MT.API.MVC.Models.Dtos
     {
         public int Id { get; set; }
         public int StreetID { get; set; }
-        public int StreetName { get; set; }
+        public string StreetName { get; set; }
         public float? Latitude { get; set; }
         public float? Longitude { get; set; }
         public string Name { get; set; }

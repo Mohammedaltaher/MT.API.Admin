@@ -78,6 +78,22 @@ namespace MT.API.MVC.Controllers
 
             return Json(response);
         }
+
+        [Route("api/GetCurrentStreet")]
+        [HttpGet]
+        public IHttpActionResult GetCurrentStreet(int StreetId)
+        {
+            var CurrentStreetStatus = new List<AllCurrentStreetStatusDto>() { };
+         
+                CurrentStreetStatus.AddRange(GetStreetInf(context.Street.Where(x=>x.Id == StreetId).FirstOrDefault()));
+         
+            AllCurrentStreetStatusResponseDto response = new AllCurrentStreetStatusResponseDto()
+            {
+                Data = CurrentStreetStatus
+            };
+
+            return Json(response);
+        }
         // POST api/values
         public IHttpActionResult Post([FromBody] CameraRequestDto req)
         {
