@@ -36,7 +36,7 @@ namespace MT.API.MVC.Controllers
         }
         [Route("api/GetCurrentStreetStatus")]
         [HttpGet]
-        public IHttpActionResult GetCurrentStreetStatus(string streetName)
+        public IHttpActionResult GetStreet(string streetName)
         {
             var data = context.CameraRequest.Where(w => w.Camera.Street.Name.Contains(streetName)).ToList();
             streetInfoResponseDto response = new streetInfoResponseDto()
@@ -100,6 +100,7 @@ namespace MT.API.MVC.Controllers
             try
             {
                 CameraRequest data = mapper.Map<CameraRequestDto, CameraRequest>(req);
+                data.Date = DateTime.Now;
                 context.CameraRequest.Add(data);
                 context.SaveChanges();
                 return Ok();
@@ -111,6 +112,12 @@ namespace MT.API.MVC.Controllers
             }
 
         }
+
+        //get day crowd by hours / week crowd by day / year crowd by months for traffic man / street crowd
+        // Infrastructure Authority get street crowd by day weeek month , determent what city needs a new street 
+        // Citizen current crowded roud , show the map full of cars , show the expcted street crowd per day 
+
+
 
         static List<AllCurrentStreetStatusDto> GetStreetInf(Street street)
         {

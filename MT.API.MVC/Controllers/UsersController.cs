@@ -10,7 +10,6 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using System.Web.Mvc;
 using System.Web.UI;
 
 namespace MT.API.MVC.Controllers
@@ -36,7 +35,7 @@ namespace MT.API.MVC.Controllers
         {
             try
             {
-                if (context.User.Where(x => x.Username == req.Username).Count() > 0)
+                if (context.User.Where(x => x.Username == req.Username  || x.Email == req.Email).Count() > 0)
                 {
                     return BadRequest("username is already exits");
                 }
@@ -50,7 +49,7 @@ namespace MT.API.MVC.Controllers
                     IsDeleted = "N",
                     Username = req.Username,
                     PhoneNumber = req.PhoneNumber,
-                    UserTypeId = 1
+                    UserTypeId = 2 // citizen
                 };
                 
                 context.User.Add(user);
@@ -63,5 +62,30 @@ namespace MT.API.MVC.Controllers
             }
       
         }
+        [Route("api/Login")]
+        [HttpPost]
+        public IHttpActionResult Login(UserLoginRequestDto req)
+        {
+            UserLoginResponseDto response;
+            var user = context.User.Where(x => (x.Email == req.Email || x.Username == req.Email) && x.Password == req.Password).FirstOrDefault();
+            if(user != null)
+            {
+                response = new UserLoginResponseDto()
+                {
+                    Data = mapper.Map<User, UserLoginDto>(user) ,
+                    ErrorMessage = null 
+                };
+            }
+            else
+            {
+                response = new UserLoginResponseDto()
+                {
+                    Data = null ,
+                    ErrorMessage = "incorrect password or email "
+                };
+            }
+            return Json(response);
+        }
+
     }
 }

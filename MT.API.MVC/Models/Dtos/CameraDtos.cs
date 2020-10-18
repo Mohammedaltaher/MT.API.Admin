@@ -8,7 +8,6 @@ namespace MT.API.MVC.Models.Dtos
     public class CameraRequestDto
     {
         public int CameraID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
         public Nullable<int> InCount { get; set; }
         public Nullable<int> OutCount { get; set; }
     }

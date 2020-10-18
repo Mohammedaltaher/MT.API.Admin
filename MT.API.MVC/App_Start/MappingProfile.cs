@@ -28,7 +28,9 @@ namespace MT.API.MVC.App_Start
               ;
 
                  cfg.CreateMap<CameraRequestDto, CameraRequest>();
-
+                 cfg.CreateMap<User, UserLoginDto>()
+              .ForMember(p => p.UserTypeName, opt => opt.MapFrom(x => x.UserType.Name))
+                 ;
 
              });
 
