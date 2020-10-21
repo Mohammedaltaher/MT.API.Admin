@@ -32,4 +32,15 @@ namespace MT.API.MVC.Models.Dtos
         public double TrafficJam { get; set; }
 
     }
+    public class CrowedPerDayResponseDto
+    {
+        public List<CrowedPerDayDto> Data { get; set; }
+    }
+    public class CrowedPerDayDto
+    {
+        public int streetId { get; set; }
+        public string hour { get; set; }
+        public int carsCount { get; set; }
+        public double TrafficJam { get; set; }
+    }
 }
