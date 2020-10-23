@@ -37,5 +37,6 @@ namespace MT.API.MVC.Models.Dtos
         public string Name { get; set; }
         public string CityName { get; set; }
         public int Capcity { get; set; }
+        public int CarsCount { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace MT.API.MVC.Models.Dtos
     public class CrowedPerDayDto
     {
         public int streetId { get; set; }
-        public string hour { get; set; }
+        public string Value { get; set; }
         public int carsCount { get; set; }
         public double TrafficJam { get; set; }
     }

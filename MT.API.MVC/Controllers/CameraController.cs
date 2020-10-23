@@ -61,7 +61,7 @@ namespace MT.API.MVC.Controllers
         }
         [Route("api/GetAllStreetPosstions")]
         [HttpGet]
-        public IHttpActionResult GetAllStreetPosstions(int StreetId)
+        public IHttpActionResult GetAllStreetPosstions()
         {
             var data = context.StreetPosstion.ToList();
             //  var streetInf = GetStreetInf(context.Street.Where(c => c.Id == StreetId).FirstOrDefault());
@@ -225,7 +225,7 @@ namespace MT.API.MVC.Controllers
 
                     CrowedPerDayDto todayHour = new CrowedPerDayDto
                     {
-                        hour = i.ToString(),
+                        Value = i.ToString(),
                         carsCount = carsCount,
                         TrafficJam = ((double)carsCount / (double)street.Capacity) * 100,
                         streetId = street.Id
@@ -264,7 +264,7 @@ namespace MT.API.MVC.Controllers
 
                     CrowedPerDayDto todayHour = new CrowedPerDayDto
                     {
-                        hour = ((DayOfWeek)i).ToString(),
+                        Value = ((DayOfWeek)i).ToString(),
                         carsCount = carsCount,
                         TrafficJam = ((double)carsCount / (double)street.Capacity) * 100,
                         streetId = street.Id
@@ -303,7 +303,7 @@ namespace MT.API.MVC.Controllers
 
                     CrowedPerDayDto todayHour = new CrowedPerDayDto
                     {
-                        hour = (i).ToString(),
+                        Value = (i).ToString(),
                         carsCount = carsCount,
                         TrafficJam = ((double)carsCount / (double)street.Capacity) * 100,
                         streetId = street.Id
@@ -348,7 +348,7 @@ namespace MT.API.MVC.Controllers
             }
             CrowedPerDayDto todayHour = new CrowedPerDayDto
             {
-                hour = city.Name,
+                Value = city.Name,
                 carsCount = carsCount,
                 TrafficJam = ((double)carsCount / (double)cityCapcity) * 100,
                 streetId = city.Id

@@ -25,6 +25,7 @@ namespace MT.API.MVC.App_Start
               .ForMember(p => p.StreetName, opt => opt.MapFrom(x => x.Street.Capacity))
               .ForMember(p => p.CityName, opt => opt.MapFrom(x => x.Street.City.Name))
               .ForMember(p => p.Capcity, opt => opt.MapFrom(x => x.Street.Capacity))
+              .ForMember(p => p.CarsCount, opt => opt.MapFrom(x => x.Street.Cameras.Where(z=>z.IsInStreetBegaining == true).FirstOrDefault().CameraRequests.Sum(c=>c.InCount) + x.Street.Cameras.Where(z => z.IsInStreetBegaining == false).FirstOrDefault().CameraRequests.Sum(c => c.OutCount)))
               ;
 
                  cfg.CreateMap<CameraRequestDto, CameraRequest>();
