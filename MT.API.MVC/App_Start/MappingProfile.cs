@@ -20,7 +20,9 @@ namespace MT.API.MVC.App_Start
                 .ForMember(p => p.CurrentCars, opt => opt.MapFrom(x => x.InCount))
                 .ForMember(p => p.StreetName, opt => opt.MapFrom(x => x.Camera.Street.Name))
                 ;
-
+                 cfg.CreateMap<Street, GetAllStreetDetailsDto>()
+               .ForMember(p => p.CityName, opt => opt.MapFrom(x => x.City.Name))
+               ;
                  cfg.CreateMap<StreetPosstion, StreetPossationsDto>()
               .ForMember(p => p.StreetName, opt => opt.MapFrom(x => x.Street.Capacity))
               .ForMember(p => p.CityName, opt => opt.MapFrom(x => x.Street.City.Name))

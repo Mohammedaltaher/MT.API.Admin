@@ -51,7 +51,7 @@ namespace MT.API.MVC.Controllers
         [HttpGet]
         public IHttpActionResult GetStreetPosstions(int StreetId)
         {
-            var data = context.StreetPosstion.Where(c => c.StreetID == StreetId).ToList();
+            var data = context.StreetPosstion.Where(c => c.StreetID == StreetId).OrderBy(x => x.Name).ToList();
             //  var streetInf = GetStreetInf(context.Street.Where(c => c.Id == StreetId).FirstOrDefault());
             StreetPossationsResponseDto response = new StreetPossationsResponseDto()
             {
@@ -86,7 +86,20 @@ namespace MT.API.MVC.Controllers
             }
             AllCurrentStreetStatusResponseDto response = new AllCurrentStreetStatusResponseDto()
             {
-                Data = CurrentStreetStatus
+                Data = CurrentStreetStatus.OrderByDescending(x=>x.TrafficJam)
+            };
+
+            return Json(response);
+        }
+        [Route("api/GetAllStreetDetails")]
+        [HttpGet]
+        public IHttpActionResult GetAllStreetDetails()
+        {
+            var data = context.Street.ToList();
+            // get street cameras 
+            AllStreetDetailsResponse response = new AllStreetDetailsResponse()
+            {
+                Data = mapper.Map<IEnumerable<Street>, IEnumerable<GetAllStreetDetailsDto>>(data)
             };
 
             return Json(response);
@@ -102,7 +115,7 @@ namespace MT.API.MVC.Controllers
 
             AllCurrentStreetStatusResponseDto response = new AllCurrentStreetStatusResponseDto()
             {
-                Data = CurrentStreetStatus
+                Data = CurrentStreetStatus.OrderByDescending(x => x.TrafficJam)
             };
 
             return Json(response);
@@ -118,7 +131,7 @@ namespace MT.API.MVC.Controllers
 
             CrowedPerDayResponseDto response = new CrowedPerDayResponseDto()
             {
-                Data = crowedPerDayDto
+                Data = crowedPerDayDto.OrderByDescending(x => x.TrafficJam)
             };
 
             return Json(response);
@@ -133,7 +146,7 @@ namespace MT.API.MVC.Controllers
 
             CrowedPerDayResponseDto response = new CrowedPerDayResponseDto()
             {
-                Data = crowedPerDayDto
+                Data = crowedPerDayDto.OrderByDescending(x => x.TrafficJam)
             };
 
             return Json(response);
@@ -148,7 +161,7 @@ namespace MT.API.MVC.Controllers
 
             CrowedPerDayResponseDto response = new CrowedPerDayResponseDto()
             {
-                Data = crowedPerDayDto
+                Data = crowedPerDayDto.OrderByDescending(x => x.TrafficJam)
             };
 
             return Json(response);
@@ -166,7 +179,7 @@ namespace MT.API.MVC.Controllers
 
             CrowedPerDayResponseDto response = new CrowedPerDayResponseDto()
             {
-                Data = crowedPerDayDto
+                Data = crowedPerDayDto.OrderByDescending(x => x.TrafficJam)
             };
 
             return Json(response);
@@ -319,7 +332,7 @@ namespace MT.API.MVC.Controllers
         {
             var CurrentStreetStatus = new List<CrowedPerDayDto>() { };
             var carsCount = 0;
-            var cityCapcity = 0;
+            double cityCapcity = 0;
             foreach (var street in city.Streets)
             {
                 var CameraCounts = street.Cameras.Count;
@@ -346,11 +359,16 @@ namespace MT.API.MVC.Controllers
                 }
 
             }
+            double trafficJam = 0;
+            if(carsCount != 0)
+            {
+                 trafficJam = ((double)carsCount / cityCapcity) * 100;
+            }
             CrowedPerDayDto todayHour = new CrowedPerDayDto
             {
                 Value = city.Name,
                 carsCount = carsCount,
-                TrafficJam = ((double)carsCount / (double)cityCapcity) * 100,
+                TrafficJam = trafficJam,
                 streetId = city.Id
             };
             CurrentStreetStatus.Add(todayHour);

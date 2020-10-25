@@ -18,8 +18,13 @@ namespace MT.API.MVC.Models.Dtos
     }
     public class AllCurrentStreetStatusResponseDto
     {
-        public List<AllCurrentStreetStatusDto> Data { get; set; }
+        public IEnumerable<AllCurrentStreetStatusDto> Data { get; set; }
     }
+    public class AllStreetDetailsResponse
+    {
+        public IEnumerable<GetAllStreetDetailsDto> Data { get; set; }
+    }
+
     public class AllCurrentStreetStatusDto
     {
         public int StreetID { get; set; }
@@ -32,12 +37,20 @@ namespace MT.API.MVC.Models.Dtos
         public double TrafficJam { get; set; }
 
     }
+    public class GetAllStreetDetailsDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string CityName { get; set; }
+        public int Capacity { get; set; }
+    }
     public class CrowedPerDayResponseDto
     {
-        public List<CrowedPerDayDto> Data { get; set; }
+        public IEnumerable<CrowedPerDayDto> Data { get; set; }
     }
     public class CrowedPerDayDto
     {
+
         public int streetId { get; set; }
         public string Value { get; set; }
         public int carsCount { get; set; }
